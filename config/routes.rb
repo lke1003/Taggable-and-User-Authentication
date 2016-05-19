@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  get 'links/about'
+  
+  #get 'lec3'=>'links#redirect'
+  
+  resources :links
+  
+  get ':url' => 'links#redirect'
+  root 'links#index'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
