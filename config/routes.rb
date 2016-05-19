@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   
   resources :links
   
-  get ':url' => 'links#redirect'
+  get ':url' => 'links#redirect' , as: :redirect
   root 'links#index'
   
   # The priority is based upon order of creation: first created -> highest priority.

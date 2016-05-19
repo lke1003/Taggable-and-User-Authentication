@@ -25,6 +25,8 @@ class LinksController < ApplicationController
       raise "Route not found."
     end
     
+    @link.increase_count!
+    
     redirect_to @link.original_url, status: 301
   end
   # GET /links/new
