@@ -1,14 +1,30 @@
-<p id="notice"><%= notice %></p>
+<style>
+.center {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+}
+</style>
 
+
+<div class="center">
+<p id="notice"><%= notice %></p>
 <p>
+  
+  
   <strong>Original url:</strong>
   <%= @link.original_url %>
 </p>
 
 <p>
-  <strong>Short url:</strong>
-  <%= @link.short_url %>
+  
+  
+  <strong>Shorten url:</strong>
+  <%=link_to "https://lecture3-lke1003.c9users.io/#{@link.short_url}", redirect_path(@link.short_url), :target => '_blank'%></strong>
 </p>
+<%= link_to 'Edit', edit_link_path(@link),  class: "btn btn-warning" %> |
+<%= link_to 'Back', links_path, class: "btn btn-primary" %>
+</div>
 
-<%= link_to 'Edit', edit_link_path(@link) %> |
-<%= link_to 'Back', links_path %>
+

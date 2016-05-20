@@ -4,7 +4,7 @@ class LinksController < ApplicationController
   # GET /links
   # GET /links.json
   def index
-    @links = Link.all
+    @links = Link.all.order('updated_at DESC')
   end
 
   # GET /links/1
@@ -18,9 +18,8 @@ class LinksController < ApplicationController
   
   def redirect
     short_url = params[:url]
-    
     @link = Link.where(short_url: short_url).first
-    
+    #raise @link.original_url
     if @link.nil?
       raise "Route not found."
     end
@@ -41,6 +40,8 @@ class LinksController < ApplicationController
   # POST /links
   # POST /links.json
   def create
+    #raise link_params.original_url
+    
     @link = Link.new(link_params)
 
     respond_to do |format|

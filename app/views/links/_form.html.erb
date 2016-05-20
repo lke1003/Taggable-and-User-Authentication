@@ -1,3 +1,4 @@
+
 <%= form_for(@link) do |f| %>
   <% if @link.errors.any? %>
     <div id="error_explanation">
@@ -13,13 +14,9 @@
 
   <div class="field">
     <%= f.label :original_url %><br>
-    <%= f.text_field :original_url %>
+    <%= f.text_field :original_url, :size => 100 %>
   </div>
-  <div class="field">
-    <%= f.label :short_url %><br>
-    <%= f.text_field :short_url %>
-  </div>
-  <div class="actions">
+  <div class="actions" >
     <%= f.submit %>
   </div>
 <% end %>
