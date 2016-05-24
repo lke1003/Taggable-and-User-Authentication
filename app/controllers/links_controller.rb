@@ -5,11 +5,13 @@ class LinksController < ApplicationController
   # GET /links.json
   def index
     @links = Link.all.order('updated_at DESC')
+    @host = request.host
   end
 
   # GET /links/1
   # GET /links/1.json
   def show
+    @host = request.host
   end
 
   def about
@@ -40,16 +42,19 @@ class LinksController < ApplicationController
   # POST /links
   # POST /links.json
   def create
-    #raise link_params.original_url
-    
-    @link = Link.new(link_params)
-
+    #@link = Link.new(link_params)
+   #@link =Link.first_or_create(original_url: params[:original_url])
+    #raise format
+    @link = Link.where(original_url: link_params[:original_url]).first_or_initialize
+    #raise link_params[:original_url]
+    @host = request.host
     respond_to do |format|
-      if @link.save
+      if @link.new_record?
+        @link.save!
         format.html { redirect_to @link, notice: 'Link was successfully created.' }
         format.json { render :show, status: :created, location: @link }
       else
-        format.html { render :new }
+        format.html { redirect_to @link, notice: 'Link was created.'}
         format.json { render json: @link.errors, status: :unprocessable_entity }
       end
     end

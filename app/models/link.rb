@@ -1,5 +1,7 @@
 class Link < ActiveRecord::Base
-   # require 'uri'
+    require 'uri'
+   
+    validates_format_of :original_url, :with => URI.regexp
     
      before_save :generate_short_url_if_empty
      
@@ -16,7 +18,14 @@ class Link < ActiveRecord::Base
      
      def generate_short_url_if_empty
         if short_url.nil? || short_url.empty?
-            self.short_url=SecureRandom.hex[0...4]
+            begin
+              self.short_url=SecureRandom.hex[0...4]
+              @link = Link.find_by short_url: short_url
+            end until @link.blank?
         end
+     end
+     
+     def check_short_url
+        
      end
 end
