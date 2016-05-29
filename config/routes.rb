@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'links/about'
   
   #get 'lec3'=>'links#redirect'
