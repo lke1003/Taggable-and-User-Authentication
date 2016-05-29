@@ -1,10 +1,12 @@
 class LinksController < ApplicationController
+  before_action :authenticate_user!, except: :redirect
+  
   before_action :set_link, only: [:show, :edit, :update, :destroy]
 
   # GET /links
   # GET /links.json
   def index
-    @links = Link.all.order('updated_at DESC')
+    @links = current_user.links.all.order('updated_at DESC')
     @host = request.host
   end
 
@@ -20,7 +22,7 @@ class LinksController < ApplicationController
   
   def redirect
     short_url = params[:url]
-    @link = Link.where(short_url: short_url).first
+    @link = current_user.links.where(short_url: short_url).first
     #raise @link.original_url
     if @link.nil?
       raise "Route not found."
@@ -32,7 +34,7 @@ class LinksController < ApplicationController
   end
   # GET /links/new
   def new
-    @link = Link.new
+    @link = current_user.links.new
   end
 
   # GET /links/1/edit
@@ -45,7 +47,7 @@ class LinksController < ApplicationController
     #@link = Link.new(link_params)
    #@link =Link.first_or_create(original_url: params[:original_url])
     #raise format
-    @link = Link.where(original_url: link_params[:original_url]).first_or_initialize
+    @link = current_user.links.where(original_url: link_params[:original_url]).first_or_initialize
     #raise link_params[:original_url]
     @host = request.host
     respond_to do |format|
@@ -87,7 +89,7 @@ class LinksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_link
-      @link = Link.find(params[:id])
+      @link = current_user.links.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

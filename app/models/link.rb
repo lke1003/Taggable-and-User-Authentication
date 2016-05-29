@@ -4,6 +4,7 @@ class Link < ActiveRecord::Base
     validates_format_of :original_url, :with => URI.regexp
     
      before_save :generate_short_url_if_empty
+     belongs_to :user
      
      def increase_count
          self.Visited_count+=1
