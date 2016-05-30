@@ -9,21 +9,27 @@
 
 
 <div class="center">
+  
+ <h1><%= @link.original_url %></h1>
+
+  <strong>Shorten url:</strong>
+  <%=link_to "https://#{@host}/#{@link.short_url}", redirect_path(@link.short_url), :target => '_blank'%></strong>
+</p>
 <p>
-  
-  
-  <strong>Original url:</strong>
-  <%= @link.original_url %>
+  <strong>Tag: </strong>
+  <%= tag_list_with_link(@link.tag_list) %>
 </p>
 
 <p>
-  
-  
-  <strong>Shorten url:</strong>
-  <%=link_to "https://lecture3-lke1003.c9users.io/#{@link.short_url}", redirect_path(@link.short_url), :target => '_blank'%></strong>
+  <%= link_to 'All link', links_path %>
 </p>
-<%= link_to 'Edit', edit_link_path(@link),  class: "btn btn-warning" %> |
-<%= link_to 'Back', links_path, class: "btn btn-primary" %>
+<p>
+  
+  
+
+<%= link_to 'Edit', edit_link_path(@link),  class: "btn btn-warning" %>
+<%= link_to 'Delete', @link, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-s' %>
+
 </div>
 
 

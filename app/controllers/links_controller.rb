@@ -6,7 +6,12 @@ class LinksController < ApplicationController
   # GET /links
   # GET /links.json
   def index
-    @links = current_user.links.all.order('updated_at DESC')
+    
+    if params[:tag].nil?
+      @links = current_user.links.all.order('updated_at DESC')
+    else
+      @links= current_user.links.tagged_with(params[:tag])
+    end
     @host = request.host
   end
 
@@ -22,7 +27,7 @@ class LinksController < ApplicationController
   
   def redirect
     short_url = params[:url]
-    @link = current_user.links.where(short_url: short_url).first
+    @link = Link.where(short_url: short_url).first
     #raise @link.original_url
     if @link.nil?
       raise "Route not found."
@@ -94,6 +99,6 @@ class LinksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def link_params
-      params.require(:link).permit(:original_url, :short_url)
+      params.require(:link).permit(:original_url, :short_url, :tag_list)
     end
 end

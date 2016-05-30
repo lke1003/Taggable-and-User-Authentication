@@ -4,33 +4,27 @@ th{
 }
 
 </style>
+<% if params[:tag].nil? %>
 
-<h1>Listing Links</h1>
+  <h1>Links</h1>
+<% else %>
+  <h1>Links with #<%= params[:tag] %></h1>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th width=60%>Original url</th>
-      <th width=10%>Short url</th>
-      <th width=5%>Count</th>
-      <th width=10%>Last Updated Time</th>
-    </tr>
-  </thead>
+<%= link_to 'New Link', new_link_path, class: "btn btn-success" %>
+<ul class='link-list'>
+  <% @links.each do |link| %>
+  <li>
+    <p><%= link_to link.original_url, link %></p>
+    <p><input readonly value="http://<%= @host %>/<%= link.short_url %>"></p>
+    <p><small>Visited <%= link.Visited_count %> times.</small></p>
 
-  <tbody>
-    <% @links.each do |link| %>
-      <tr height=50px>
-        <td><%= link_to link.original_url, link %></td>
-        <td><%= link.short_url %></td>
-        <td><%= link.Visited_count %></td>
-        <td><%= time_ago_in_words  link.updated_at %> ago</td>
-        <td><%= link_to 'Edit', edit_link_path(link),   class: "btn btn-warning btn-xs" %></td>
-        <td><%= link_to 'Delete', link, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <p><%= tag_list_with_link(link.tag_list) %></p>
+  </li>
+   <% end %>
+</ul>
+
 
 <br>
 
-<%= link_to 'New Link', new_link_path, class: "btn btn-success" %>
+

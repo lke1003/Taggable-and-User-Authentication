@@ -6,6 +6,7 @@ class Link < ActiveRecord::Base
      before_save :generate_short_url_if_empty
      belongs_to :user
      
+     acts_as_taggable
      def increase_count
          self.Visited_count+=1
      end
