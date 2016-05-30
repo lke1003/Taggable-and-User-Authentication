@@ -8,15 +8,20 @@
 </head>
 <body>
   <header>
-    <%= link_to 'All Link', links_path %>
+
     <% if user_signed_in? %>
+    <p>Sign in as <%= current_user.email %>
       <%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %>
+    </p>
     <% else %>
       <%= link_to 'Sign in', new_user_session_path %>
     <% end %>
+
   </header>
+  <%= link_to 'All Link', links_path %>
  <p id="notice"><%= notice %></p>
  <p class="alert"><%= alert %></p>
+     
 <%= yield %>
 
 </body>

@@ -52,7 +52,8 @@ class LinksController < ApplicationController
     #@link = Link.new(link_params)
    #@link =Link.first_or_create(original_url: params[:original_url])
     #raise format
-    @link = current_user.links.where(original_url: link_params[:original_url]).first_or_initialize
+    @link = current_user.links.new(link_params)
+   # @link = current_user.links.where(original_url: link_params[:original_url]).first_or_initialize
     #raise link_params[:original_url]
     @host = request.host
     respond_to do |format|
